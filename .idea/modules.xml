@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/eko_payu.iml" filepath="$PROJECT_DIR$/eko_payu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/eko_payu_android.iml" filepath="$PROJECT_DIR$/android/eko_payu_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/android/eko_payu_example_android.iml" filepath="$PROJECT_DIR$/example/android/eko_payu_example_android.iml" />
+    </modules>
+  </component>
+</project>
