@@ -33,8 +33,6 @@ import io.flutter.plugin.common.PluginRegistry
 //import kotlinx.android.synthetic.main.activity_main.*
 //import kotlinx.android.synthetic.main.layout_si_details.*
 
-
-/** EkoPayuPlugin */
 class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry,
     PluginRegistry.ActivityResultListener {
     /// The MethodChannel that will the communication between Flutter and native Android
