@@ -29,12 +29,14 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry
+
 //import kotlinx.android.synthetic.main.activity_main.*
 //import kotlinx.android.synthetic.main.layout_si_details.*
 
 
 /** EkoPayuPlugin */
-class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry, PluginRegistry.ActivityResultListener {
+class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry,
+    PluginRegistry.ActivityResultListener {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -53,7 +55,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        Log.i(TAG,"EkoPayu Method called ["+call.method+"]")
+        Log.i(TAG, "EkoPayu Method called [" + call.method + "]")
         if (call.method == "getPlatformVersion") {
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
         } else if (call.method == "startPayment") {
@@ -129,12 +131,12 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
 
     fun preparePayUBizParams(): PayUPaymentParams {
         val vasForMobileSdkHash = HashGenerationUtils.generateHashFromSDK(
-                "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|",
-                salt
+            "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|",
+            salt
         )
         val paymenRelatedDetailsHash = HashGenerationUtils.generateHashFromSDK(
-                "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK}|${this.paymentData!!.userCredential}|",
-                salt
+            "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK}|${this.paymentData!!.userCredential}|",
+            salt
         )
 
         val additionalParamsMap: HashMap<String, Any?> = HashMap()
@@ -145,7 +147,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         additionalParamsMap[PayUCheckoutProConstants.CP_UDF5] = ""
         additionalParamsMap[PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK] = vasForMobileSdkHash
         additionalParamsMap[PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK] =
-                paymenRelatedDetailsHash
+            paymenRelatedDetailsHash
 
         var siDetails: PayUSIParams? = null
 //        if(switch_si_on_off.isChecked) {
@@ -163,87 +165,88 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
 //        }
 
         return PayUPaymentParams.Builder().setAmount(this.paymentData!!.amount)
-                .setIsProduction(this.paymentData!!.isProduction!!)
-                .setKey(this.paymentData!!.merchantKey)
-                .setProductInfo(this.paymentData!!.productName)
-                .setPhone(this.paymentData!!.phoneNumber)
-                .setTransactionId(this.paymentData!!.txnId)
-                .setFirstName(this.paymentData!!.firstName)
-                .setEmail(this.paymentData!!.emailId)
-                .setSurl(this.paymentData!!.sUrl)
-                .setFurl(this.paymentData!!.fUrl)
-                .setUserCredential(this.paymentData!!.userCredential)
-                .setAdditionalParams(additionalParamsMap)
-                .setPayUSIParams(siDetails)
-                .build()
+            .setIsProduction(this.paymentData!!.isProduction!!)
+            .setKey(this.paymentData!!.merchantKey)
+            .setProductInfo(this.paymentData!!.productName)
+            .setPhone(this.paymentData!!.phoneNumber)
+            .setTransactionId(this.paymentData!!.txnId)
+            .setFirstName(this.paymentData!!.firstName)
+            .setEmail(this.paymentData!!.emailId)
+            .setSurl(this.paymentData!!.sUrl)
+            .setFurl(this.paymentData!!.fUrl)
+            .setUserCredential(this.paymentData!!.userCredential)
+            .setAdditionalParams(additionalParamsMap)
+            .setPayUSIParams(siDetails)
+            .build()
     }
 
     private fun initUiSdk(payUPaymentParams: PayUPaymentParams) {
         PayUCheckoutPro.open(
-                this.activity!!,
-                payUPaymentParams,
-                getCheckoutProConfig(PayUCheckoutProConfig()),
-                object : PayUCheckoutProListener {
+            this.activity!!,
+            payUPaymentParams,
+            getCheckoutProConfig(PayUCheckoutProConfig()),
+            object : PayUCheckoutProListener {
 
-                    override fun onPaymentSuccess(response: Any) {                        
-                        Log.i(TAG,"Payment Success")
-                        channel.invokeMethod("success",response)
-                        processResponse(response)
-                    }
+                override fun onPaymentSuccess(response: Any) {
+                    Log.i(TAG, "Payment Success")
+                    channel.invokeMethod("success", response)
+                    processResponse(response)
+                }
 
-                    override fun onPaymentFailure(response: Any) {                        
-                        Log.i(TAG,"Payment Failure")
-                        channel.invokeMethod("failure",response)
-                        processResponse(response)
-                    }
+                override fun onPaymentFailure(response: Any) {
+                    Log.i(TAG, "Payment Failure")
+                    channel.invokeMethod("failure", response)
+                    processResponse(response)
+                }
 
-                    override fun onPaymentCancel(isTxnInitiated: Boolean) {
-                        Log.i(TAG,"Payment Cancelled")
-                        channel.invokeMethod("cancel",null)
-                        showSnackBar("Transaction cancelled by user")                    
-                    }
+                override fun onPaymentCancel(isTxnInitiated: Boolean) {
+                    Log.i(TAG, "Payment Cancelled")
+                    channel.invokeMethod("cancel", null)
+                    showSnackBar("Transaction cancelled by user")
+                }
 
-                    override fun onError(errorResponse: ErrorResponse) {
-                        Log.i(TAG,"Payment Error")
-                        channel.invokeMethod("error",errorResponse)
-                        val errorMessage: String
-                        if (errorResponse != null && errorResponse.errorMessage != null && errorResponse.errorMessage!!.isNotEmpty())
-                            errorMessage = errorResponse.errorMessage!!
-                        else
-                            errorMessage = "Some error occurred...";
-                        showSnackBar(errorMessage)
-                        
-                    }
+                override fun onError(errorResponse: ErrorResponse) {
+                    Log.i(TAG, "Payment Error")
+                    val errorMessage: String
+                    if (errorResponse != null && errorResponse.errorMessage != null && errorResponse.errorMessage!!.isNotEmpty())
+                        errorMessage = errorResponse.errorMessage!!
+                    else
+                        errorMessage = "Some error occurred...";
+                    Log.i(TAG, errorMessage);
+                    channel.invokeMethod("error", errorResponse)
+                    showSnackBar(errorMessage)
 
-                    override fun generateHash(
-                            map: HashMap<String, String?>,
-                            hashGenerationListener: PayUHashGenerationListener
+                }
+
+                override fun generateHash(
+                    map: HashMap<String, String?>,
+                    hashGenerationListener: PayUHashGenerationListener
+                ) {
+                    if (map.containsKey(PayUCheckoutProConstants.CP_HASH_STRING)
+                        && map.containsKey(PayUCheckoutProConstants.CP_HASH_STRING) != null
+                        && map.containsKey(PayUCheckoutProConstants.CP_HASH_NAME)
+                        && map.containsKey(PayUCheckoutProConstants.CP_HASH_NAME) != null
                     ) {
-                        if (map.containsKey(PayUCheckoutProConstants.CP_HASH_STRING)
-                                && map.containsKey(PayUCheckoutProConstants.CP_HASH_STRING) != null
-                                && map.containsKey(PayUCheckoutProConstants.CP_HASH_NAME)
-                                && map.containsKey(PayUCheckoutProConstants.CP_HASH_NAME) != null
-                        ) {
 
-                            val hashData = map[PayUCheckoutProConstants.CP_HASH_STRING]
-                            val hashName = map[PayUCheckoutProConstants.CP_HASH_NAME]
+                        val hashData = map[PayUCheckoutProConstants.CP_HASH_STRING]
+                        val hashName = map[PayUCheckoutProConstants.CP_HASH_NAME]
 
-                            val hash: String? =
-                                    HashGenerationUtils.generateHashFromSDK(
-                                            hashData!!,
-                                            salt
-                                    )
-                            if (!TextUtils.isEmpty(hash)) {
-                                val hashMap: HashMap<String, String?> = HashMap()
-                                hashMap[hashName!!] = hash!!
-                                hashGenerationListener.onHashGenerated(hashMap)
-                            }
+                        val hash: String? =
+                            HashGenerationUtils.generateHashFromSDK(
+                                hashData!!,
+                                salt
+                            )
+                        if (!TextUtils.isEmpty(hash)) {
+                            val hashMap: HashMap<String, String?> = HashMap()
+                            hashMap[hashName!!] = hash!!
+                            hashGenerationListener.onHashGenerated(hashMap)
                         }
                     }
+                }
 
-                    override fun setWebViewProperties(webView: WebView?, bank: Any?) {
-                    }
-                })
+                override fun setWebViewProperties(webView: WebView?, bank: Any?) {
+                }
+            })
     }
 
     private fun getCheckoutProConfig(payuConfig: PayUCheckoutProConfig): PayUCheckoutProConfig {
@@ -254,8 +257,10 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         checkoutProConfig.autoApprove = payuConfig.autoApprove
         checkoutProConfig.surePayCount = payuConfig.surePayCount;
         checkoutProConfig.cartDetails = reviewOrderAdapter?.getOrderDetailsList()
-        checkoutProConfig.showExitConfirmationOnPaymentScreen = payuConfig.showExitConfirmationOnPaymentScreen;
-        checkoutProConfig.showExitConfirmationOnCheckoutScreen = payuConfig.showExitConfirmationOnCheckoutScreen;
+        checkoutProConfig.showExitConfirmationOnPaymentScreen =
+            payuConfig.showExitConfirmationOnPaymentScreen;
+        checkoutProConfig.showExitConfirmationOnCheckoutScreen =
+            payuConfig.showExitConfirmationOnCheckoutScreen;
         checkoutProConfig.merchantName = this.paymentData!!.merchantName;
         checkoutProConfig.merchantLogo = R.drawable.merchant_logo
         return checkoutProConfig
@@ -264,33 +269,33 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
     private fun getCheckoutOrderList(): ArrayList<PaymentMode> {
         val checkoutOrderList = ArrayList<PaymentMode>()
         if (true) checkoutOrderList.add(
-                PaymentMode(
-                        PaymentType.UPI,
-                        PayUCheckoutProConstants.CP_GOOGLE_PAY
-                )
+            PaymentMode(
+                PaymentType.UPI,
+                PayUCheckoutProConstants.CP_GOOGLE_PAY
+            )
         )
         if (true) checkoutOrderList.add(
-                PaymentMode(
-                        PaymentType.WALLET,
-                        PayUCheckoutProConstants.CP_PHONEPE
-                )
+            PaymentMode(
+                PaymentType.WALLET,
+                PayUCheckoutProConstants.CP_PHONEPE
+            )
         )
         if (true) checkoutOrderList.add(
-                PaymentMode(
-                        PaymentType.WALLET,
-                        PayUCheckoutProConstants.CP_PAYTM
-                )
+            PaymentMode(
+                PaymentType.WALLET,
+                PayUCheckoutProConstants.CP_PAYTM
+            )
         )
-        Log.i(TAG,"checkoutOrdeList "+checkoutOrderList);
+        Log.i(TAG, "checkoutOrdeList " + checkoutOrderList);
         return checkoutOrderList
     }
 
     private fun processResponse(response: Any) {
         response as HashMap<*, *>
         android.util.Log.d(
-                BaseApiLayerConstants.SDK_TAG,
-                "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
-                        + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
+            BaseApiLayerConstants.SDK_TAG,
+            "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
+                    + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
         )
 
 //        AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert)
