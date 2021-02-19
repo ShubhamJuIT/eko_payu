@@ -200,19 +200,18 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
                 override fun onPaymentCancel(isTxnInitiated: Boolean) {
                     Log.i(TAG, "Payment Cancelled")
                     channel.invokeMethod("cancel", null)
-                    showSnackBar("Transaction cancelled by user")
                 }
 
                 override fun onError(errorResponse: ErrorResponse) {
-                    Log.i(TAG, "Payment Error")
-                    val errorMessage: String
-                    if (errorResponse != null && errorResponse.errorMessage != null && errorResponse.errorMessage!!.isNotEmpty())
-                        errorMessage = errorResponse.errorMessage!!
-                    else
-                        errorMessage = "Some error occurred...";
-                    Log.i(TAG, errorMessage);
+                    Log.i(TAG, "Payment Error ["+errorResponse+"] ["+errorResponse.errorMessage+"] ["+errorResponse.errorCode+"]")
                     channel.invokeMethod("error", errorResponse)
-                    showSnackBar(errorMessage)
+                    // val errorMessage: String
+                    // if (errorResponse != null && errorResponse.errorMessage != null && errorResponse.errorMessage!!.isNotEmpty())
+                    //     errorMessage = errorResponse.errorMessage!!
+                    // else
+                    //     errorMessage = "Some error occurred...";
+                    // Log.i(TAG, errorMessage);
+                    
 
                 }
 
