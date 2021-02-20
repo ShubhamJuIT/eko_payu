@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:ffi';
 
+import 'package:eko_payu/payu_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
@@ -48,6 +49,11 @@ class EkoPayu {
         return "Nothing";
         break;
     }
+  }
+
+  Future<dynamic> payuConfig(PayuConfig config) async {
+    var response = await _channel.invokeMethod("payuConfig", config.toMap);
+    return response;
   }
 
   Future<dynamic> startPayment(

@@ -44,6 +44,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
     private lateinit var context: Context;
     private val TAG: String = "EkoPayu"
     private var paymentData: PaymentData? = null;
+    private var payuConfig: PayUCheckoutProConfig? = null;
     private var salt: String = "99FzqrK2";
     private var reviewOrderAdapter: ReviewOrderRecyclerViewAdapter? = null
 
@@ -58,8 +59,21 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
         } else if (call.method == "startPayment") {
             this.startPayment(call, result);
+        } else if (call.method == "payuConfig") {
+            this.setPayuConfig(call)
         } else {
             result.notImplemented()
+        }
+    }
+
+    fun setPayuConfig(call: MethodCall) {
+        if(payuConfig==null){
+            payuConfig = PayUCheckoutProConfig()
+            payuConfig!!.merchantLogo = R.drawable.logo_payu;
+            payuConfig!!.merchantName = "Eko"
+        }
+        if(call!=null){
+            payuConfig!!.merchantName = call.argument("merchantName")!!;
         }
     }
 
@@ -182,7 +196,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         PayUCheckoutPro.open(
             this.activity!!,
             payUPaymentParams,
-            getCheckoutProConfig(PayUCheckoutProConfig()),
+            getCheckoutProConfig(this.payuConfig!!),
             object : PayUCheckoutProListener {
 
                 override fun onPaymentSuccess(response: Any) {
@@ -203,7 +217,10 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
                 }
 
                 override fun onError(errorResponse: ErrorResponse) {
-                    Log.i(TAG, "Payment Error ["+errorResponse+"] ["+errorResponse.errorMessage+"] ["+errorResponse.errorCode+"]")
+                    Log.i(
+                        TAG,
+                        "Payment Error [" + errorResponse + "] [" + errorResponse.errorMessage + "] [" + errorResponse.errorCode + "]"
+                    )
                     channel.invokeMethod("error", errorResponse)
                     // val errorMessage: String
                     // if (errorResponse != null && errorResponse.errorMessage != null && errorResponse.errorMessage!!.isNotEmpty())
@@ -211,7 +228,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
                     // else
                     //     errorMessage = "Some error occurred...";
                     // Log.i(TAG, errorMessage);
-                    
+
 
                 }
 
@@ -259,7 +276,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         checkoutProConfig.showExitConfirmationOnCheckoutScreen =
             payuConfig.showExitConfirmationOnCheckoutScreen;
         checkoutProConfig.merchantName = this.paymentData!!.merchantName;
-        checkoutProConfig.merchantLogo = R.drawable.merchant_logo
+        checkoutProConfig.merchantLogo = payuConfig.merchantLogo
         return checkoutProConfig
     }
 
