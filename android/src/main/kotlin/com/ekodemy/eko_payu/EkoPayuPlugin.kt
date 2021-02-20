@@ -162,7 +162,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         Log.i(TAG, "HASH1 Value - $vasForMobileSdkHash")
         Log.i(
             TAG,
-            "HASH2 ${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|"
+            "HASH2 ${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK}|${this.paymentData!!.userCredential}|"
         )
 
         val paymenRelatedDetailsHash = HashGenerationUtils.generateHashFromSDK(
