@@ -283,7 +283,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
             payuConfig.showExitConfirmationOnPaymentScreen;
         checkoutProConfig.showExitConfirmationOnCheckoutScreen =
             payuConfig.showExitConfirmationOnCheckoutScreen;
-        checkoutProConfig.merchantName = this.paymentData!!.merchantName;
+        checkoutProConfig.merchantName = payuConfig.merchantName;
         checkoutProConfig.merchantLogo = payuConfig.merchantLogo
         return checkoutProConfig
     }
