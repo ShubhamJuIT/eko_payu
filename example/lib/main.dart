@@ -33,7 +33,8 @@ class _MyAppState extends State<MyApp> {
         onSuccess: (data) => this.onSuccess(data),
         onCancel: (data) => this.onCancel(data),
         onError: (data) => this.onError(data),
-        onFailure: (data) => this.onFailure(data));
+        onFailure: (data) => this.onFailure(data),
+        hashGenerate: (data) => this.onHashGenerate(data));
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       platformVersion = await EkoPayu.platformVersion;
@@ -65,6 +66,10 @@ class _MyAppState extends State<MyApp> {
 
   onFailure(dynamic data) {
     print("Failure");
+  }
+
+  onHashGenerate(dynamic data) {
+    return null;
   }
 
   Future<void> start() async {

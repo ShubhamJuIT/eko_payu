@@ -12,13 +12,19 @@ class EkoPayu {
   final Void Function(dynamic) onError;
   final Void Function(dynamic) onCancel;
   final Void Function(dynamic) onFailure;
+  final String Function(String) hashGenerate;
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
-  EkoPayu({this.onSuccess, this.onError, this.onCancel, this.onFailure}) {
+  EkoPayu(
+      {this.onSuccess,
+      this.onError,
+      this.onCancel,
+      this.onFailure,
+      this.hashGenerate}) {
     _channel.setMethodCallHandler(nativeMethodCallHandler);
   }
 
@@ -45,10 +51,18 @@ class EkoPayu {
           this.onFailure(methodCall.arguments);
         }
         break;
+      case "hash":
+        if (this.hashGenerate != null) {
+          return this.hashGenerate(methodCall.arguments);
+        } else {
+          return null;
+        }
+        break;
       default:
         return "Nothing";
         break;
     }
+    return true;
   }
 
   Future<dynamic> payuConfig(PayuConfig config) async {
@@ -71,7 +85,9 @@ class EkoPayu {
       @required String emailId,
       @required String sUrl,
       @required String fUrl,
-      @required String hash}) async {
+      @required String hash,
+      @required String paymentSdkHash,
+      @required String vasSdkHash}) async {
     print("Starting Called ");
     var response = await _channel.invokeMethod("startPayment", {
       "merchantName": merchantName,
@@ -88,7 +104,9 @@ class EkoPayu {
       "emailId": emailId,
       "sUrl": sUrl,
       "fUrl": fUrl,
-      "hash": hash
+      "hash": hash,
+      "paymentSdkHash": paymentSdkHash,
+      "vasSdkHash": vasSdkHash
     });
     log("Start Payment Done");
   }

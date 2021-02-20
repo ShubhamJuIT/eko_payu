@@ -25,4 +25,6 @@ class PaymentData {
     var udf9: String = "";
     var udf10: String = "";
     var hash: String? = null;
+    var paymentSdkHash: String? = null;
+    var vasSdkHash: String? = null;
 }

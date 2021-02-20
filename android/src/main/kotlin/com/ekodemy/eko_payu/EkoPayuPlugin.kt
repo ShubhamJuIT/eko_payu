@@ -5,15 +5,10 @@ package com.ekodemy.eko_payu
 //import kotlinx.android.synthetic.main.layout_si_details.*
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.text.TextUtils
 import android.webkit.WebView
 import androidx.annotation.NonNull
-import androidx.databinding.DataBindingUtil
-import com.ekodemy.eko_payu.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 import com.payu.base.models.*
 import com.payu.checkoutpro.PayUCheckoutPro
 import com.payu.checkoutpro.models.PayUCheckoutProConfig
@@ -144,6 +139,8 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         this.paymentData!!.txnId = call.argument("txnId");
         this.paymentData!!.userCredential = call.argument("userCredential");
         this.paymentData!!.hash = call.argument("hash");
+        this.paymentData!!.paymentSdkHash = call.argument("paymentSdkHash");
+        this.paymentData!!.vasSdkHash = call.argument("vasSdkHash");
         Log.i(TAG, "Actual HASH ${this.paymentData!!.hash}");
         setPayuConfig(call);
         val payUPaymentParams = preparePayUBizParams();
@@ -151,24 +148,35 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
     }
 
     fun preparePayUBizParams(): PayUPaymentParams {
-        Log.i(
-            TAG,
-            "HASH1 - ${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|"
-        )
-        val vasForMobileSdkHash = HashGenerationUtils.generateHashFromSDK(
-            "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|",
-            salt
-        )
-        Log.i(TAG, "HASH1 Value - $vasForMobileSdkHash")
-        Log.i(
-            TAG,
-            "HASH2 ${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK}|${this.paymentData!!.userCredential}|"
-        )
+        var vasForMobileSdkHash: String? = null;
+        if (this.paymentData!!.vasSdkHash == null) {
+            Log.i(
+                TAG,
+                "HASH1 - ${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|"
+            )
+            vasForMobileSdkHash = HashGenerationUtils.generateHashFromSDK(
+                "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|",
+                salt
+            )!!
 
-        val paymenRelatedDetailsHash = HashGenerationUtils.generateHashFromSDK(
-            "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK}|${this.paymentData!!.userCredential}|",
-            salt
-        )
+        } else {
+            vasForMobileSdkHash = this.paymentData!!.vasSdkHash;
+        }
+        Log.i(TAG, "HASH1 Value - $vasForMobileSdkHash")
+        var paymenRelatedDetailsHash: String? = null;
+        if (this.paymentData!!.paymentSdkHash == null) {
+            Log.i(
+                TAG,
+                "HASH2 ${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK}|${this.paymentData!!.userCredential}|"
+            )
+
+            paymenRelatedDetailsHash = HashGenerationUtils.generateHashFromSDK(
+                "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK}|${this.paymentData!!.userCredential}|",
+                salt
+            )
+        } else {
+            paymenRelatedDetailsHash = this.paymentData!!.paymentSdkHash;
+        }
         Log.i(TAG, "HASH2 Value - $paymenRelatedDetailsHash")
 
         val additionalParamsMap: HashMap<String, Any?> = HashMap()
@@ -180,6 +188,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         additionalParamsMap[PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK] = vasForMobileSdkHash
         additionalParamsMap[PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK] =
             paymenRelatedDetailsHash
+        additionalParamsMap[PayUCheckoutProConstants.CP_PAYMENT_HASH] = this.paymentData!!.hash;
 
         var siDetails: PayUSIParams? = null
 //        if(switch_si_on_off.isChecked) {
@@ -262,23 +271,28 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
                         && map.containsKey(PayUCheckoutProConstants.CP_HASH_NAME) != null
                     ) {
 
-                        val hashData = map[PayUCheckoutProConstants.CP_HASH_STRING]
-                        val hashName = map[PayUCheckoutProConstants.CP_HASH_NAME]
+                        val hashData: String? = map[PayUCheckoutProConstants.CP_HASH_STRING]
+                        val hashName: String? = map[PayUCheckoutProConstants.CP_HASH_NAME]
                         Log.i(
                             TAG,
                             "HASH3 $hashData"
                         )
-                        val hash: String? =
-                            HashGenerationUtils.generateHashFromSDK(
-                                hashData!!,
-                                salt
-                            )
-                        Log.i(TAG, "HASH3 Value - $hash")
-                        if (!TextUtils.isEmpty(hash)) {
-                            val hashMap: HashMap<String, String?> = HashMap()
-                            hashMap[hashName!!] = hash!!
-                            hashGenerationListener.onHashGenerated(hashMap)
-                        }
+                        // val hash: String? =
+                        //     HashGenerationUtils.generateHashFromSDK(
+                        //         hashData!!,
+                        //         salt
+                        //     )
+                        var hashCallback: HashCallback =
+                            HashCallback(hashName!!, hashData!!, hashGenerationListener);
+                        channel.invokeMethod("hash", hashData, hashCallback)
+
+//                        Log.i(TAG, "HASH3 Value - $hash")
+//                        if (!TextUtils.isEmpty(hash)) {
+//                            val hashMap: HashMap<String, String?> = HashMap()
+//                            hashMap[hashName!!] = hash!!
+//                            hashGenerationListener.onHashGenerated(hashMap)
+//                        }
+
                     }
                 }
 
