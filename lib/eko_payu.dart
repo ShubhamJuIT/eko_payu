@@ -12,7 +12,7 @@ class EkoPayu {
   final Void Function(dynamic) onError;
   final Void Function(dynamic) onCancel;
   final Void Function(dynamic) onFailure;
-  final String Function(String) hashGenerate;
+  final Future<String> Function(String) hashGenerate;
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -53,7 +53,7 @@ class EkoPayu {
         break;
       case "hash":
         if (this.hashGenerate != null) {
-          return this.hashGenerate(methodCall.arguments);
+          return await this.hashGenerate(methodCall.arguments);
         } else {
           return null;
         }

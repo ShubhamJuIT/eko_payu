@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:eko_payu/payu_config.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,7 @@ class _MyAppState extends State<MyApp> {
     print("Failure");
   }
 
-  onHashGenerate(dynamic data) {
+  Future<String> onHashGenerate(dynamic data) async {
     return null;
   }
 
