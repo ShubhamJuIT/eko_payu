@@ -35,7 +35,7 @@ class HashCallback(
     }
 
     override fun error(errorCode: String?, errorMessage: String?, errorDetails: Any?) {
-        TODO("Not yet implemented")
+        Log.e(TAG,"Hash Calculation Error.. errorCode [$errorCode] [$errorMessage]")
     }
 
     override fun notImplemented() {
