@@ -65,7 +65,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
     }
 
     fun setPayuConfig(call: MethodCall) {
-        Log.i(TAG,"Set Payu config");
+        Log.i(TAG, "Set Payu config");
         if (payuConfig == null) {
             Log.i(TAG, "Creating new PayuCheckoutProConfig");
             payuConfig = PayUCheckoutProConfig()
@@ -144,20 +144,32 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         this.paymentData!!.txnId = call.argument("txnId");
         this.paymentData!!.userCredential = call.argument("userCredential");
         this.paymentData!!.hash = call.argument("hash");
+        Log.i(TAG, "Actual HASH ${this.paymentData!!.hash}");
         setPayuConfig(call);
         val payUPaymentParams = preparePayUBizParams();
         this.initUiSdk(payUPaymentParams);
     }
 
     fun preparePayUBizParams(): PayUPaymentParams {
+        Log.i(
+            TAG,
+            "HASH1 - ${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|"
+        )
         val vasForMobileSdkHash = HashGenerationUtils.generateHashFromSDK(
             "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|",
             salt
         )
+        Log.i(TAG, "HASH1 Value - $vasForMobileSdkHash")
+        Log.i(
+            TAG,
+            "HASH2 ${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_VAS_FOR_MOBILE_SDK}|${PayUCheckoutProConstants.CP_DEFAULT}|"
+        )
+
         val paymenRelatedDetailsHash = HashGenerationUtils.generateHashFromSDK(
             "${this.paymentData!!.merchantKey}|${PayUCheckoutProConstants.CP_PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK}|${this.paymentData!!.userCredential}|",
             salt
         )
+        Log.i(TAG, "HASH2 Value - $paymenRelatedDetailsHash")
 
         val additionalParamsMap: HashMap<String, Any?> = HashMap()
         additionalParamsMap[PayUCheckoutProConstants.CP_UDF1] = ""
@@ -252,12 +264,16 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
 
                         val hashData = map[PayUCheckoutProConstants.CP_HASH_STRING]
                         val hashName = map[PayUCheckoutProConstants.CP_HASH_NAME]
-
+                        Log.i(
+                            TAG,
+                            "HASH3 $hashData"
+                        )
                         val hash: String? =
                             HashGenerationUtils.generateHashFromSDK(
                                 hashData!!,
                                 salt
                             )
+                        Log.i(TAG, "HASH3 Value - $hash")
                         if (!TextUtils.isEmpty(hash)) {
                             val hashMap: HashMap<String, String?> = HashMap()
                             hashMap[hashName!!] = hash!!
