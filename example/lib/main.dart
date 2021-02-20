@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:eko_payu/payu_config.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -69,6 +70,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> start() async {
     try {
       print("Starting Payment");
+      dynamic res =
+          await this.ekoPayu.payuConfig(PayuConfig(merchantName: "Hello"));
       this.ekoPayu.startPayment(
           merchantName: "Eko",
           merchantKey: "fnuDx1",

@@ -52,12 +52,13 @@ class EkoPayu {
   }
 
   Future<dynamic> payuConfig(PayuConfig config) async {
-    var response = await _channel.invokeMethod("payuConfig", config.toMap);
-    return response;
+    // var response = await _channel.invokeMethod("payuConfig", config.toMap());
+    // return response;
   }
 
   Future<dynamic> startPayment(
       {@required String merchantName,
+      String merchantLogo,
       @required String merchantKey,
       @required String merchantID,
       @required bool isProduction,
@@ -74,6 +75,7 @@ class EkoPayu {
     print("Starting Called ");
     var response = await _channel.invokeMethod("startPayment", {
       "merchantName": merchantName,
+      "merchantLogo": "logo",
       "merchantKey": merchantKey,
       "merchantID": merchantID,
       "isProduction": isProduction,

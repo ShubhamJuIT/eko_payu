@@ -59,31 +59,38 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
         } else if (call.method == "startPayment") {
             this.startPayment(call, result);
-        } else if (call.method == "payuConfig") {
-            this.setPayuConfig(call)
         } else {
             result.notImplemented()
         }
     }
 
     fun setPayuConfig(call: MethodCall) {
-        if(payuConfig==null){
+        Log.i(TAG,"Set Payu config");
+        if (payuConfig == null) {
+            Log.i(TAG, "Creating new PayuCheckoutProConfig");
             payuConfig = PayUCheckoutProConfig()
             payuConfig!!.merchantLogo = R.drawable.logo_payu;
             payuConfig!!.merchantName = "Eko"
         }
-        if(call!=null){
+        if (call != null) {
+            Log.i(TAG, "Setting merchantName");
             payuConfig!!.merchantName = call.argument("merchantName")!!;
+            var merchantLogo: String = call.argument("merchantLogo")!!;
+            if (merchantLogo != null) {
+                payuConfig!!.merchantLogo =
+                    context.resources.getIdentifier("logo", "drawable", context.packageName);
+            }
         }
+
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
-        context = binding.applicationContext
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         this.activity = binding.getActivity();
+        context = binding.activity.applicationContext;
         binding.addActivityResultListener(this);
     }
 
@@ -137,6 +144,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
         this.paymentData!!.txnId = call.argument("txnId");
         this.paymentData!!.userCredential = call.argument("userCredential");
         this.paymentData!!.hash = call.argument("hash");
+        setPayuConfig(call);
         val payUPaymentParams = preparePayUBizParams();
         this.initUiSdk(payUPaymentParams);
     }
