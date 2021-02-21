@@ -1,0 +1,22 @@
+PODS:
+  - eko_payu (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - eko_payu (from `.symlinks/plugins/eko_payu/ios`)
+  - Flutter (from `Flutter`)
+
+EXTERNAL SOURCES:
+  eko_payu:
+    :path: ".symlinks/plugins/eko_payu/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  eko_payu: aa878b49296c571635830341b0d35c5890fbf429
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.10.1
