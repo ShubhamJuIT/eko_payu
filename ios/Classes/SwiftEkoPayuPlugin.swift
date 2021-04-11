@@ -198,20 +198,22 @@ extension SwiftEkoPayuPlugin: PayUCheckoutProDelegate {
     public func onError(_ error: Error?) {
         // handle error scenario
         self.uiViewController.navigationController?.popToViewController(self.uiViewController, animated: true)
-        showAlert(title: "Error", message: error?.localizedDescription ?? "")
+        // showAlert(title: "Error", message: error?.localizedDescription ?? "")
+        channel.invokeMethod("error",arguments: error)
     }
     
     public func onPaymentSuccess(response: Any?) {
         // handle success scenario
         self.uiViewController.navigationController?.popToViewController(self.uiViewController, animated: true)
-        showAlert(title: "Success", message: "\(response ?? "")")
-        
+        // showAlert(title: "Success", message: "\(response ?? "")")
+        self.channel.invokeMethod("success",arguments: response)
     }
     
     public func onPaymentFailure(response: Any?) {
         // handle failure scenario
         self.uiViewController.navigationController?.popToViewController(self.uiViewController, animated: true)
-        showAlert(title: "Failure", message: "\(response ?? "")")
+        // showAlert(title: "Failure", message: "\(response ?? "")")
+        channel.invokeMethod("failure",arguments: response)
         
     }
     
@@ -220,8 +222,9 @@ extension SwiftEkoPayuPlugin: PayUCheckoutProDelegate {
         // isTxnInitiated == YES, means user cancelled the txn when on reaching bankPage
         // isTxnInitiated == NO, means user cancelled the txn before reaching the bankPage
         self.uiViewController.navigationController?.popToViewController(self.uiViewController, animated: true)
-        let completeResponse = "isTxnInitiated = \(isTxnInitiated)"
-        showAlert(title: "Cancelled", message: "\(completeResponse)")
+        // let completeResponse = "isTxnInitiated = \(isTxnInitiated)"
+        // showAlert(title: "Cancelled", message: "\(completeResponse)")
+        channel.invokeMethod("cancel",arguments: nil)
     }
     
     
