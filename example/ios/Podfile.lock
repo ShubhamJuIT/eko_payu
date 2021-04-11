@@ -1,11 +1,48 @@
 PODS:
   - eko_payu (0.0.1):
     - Flutter
+    - PayUIndia-CheckoutPro (= 2.1.0)
   - Flutter (1.0.0)
+  - PayUIndia-AssetLibrary (2.0.2)
+  - PayUIndia-CheckoutPro (2.1.0):
+    - PayUIndia-AssetLibrary (= 2.0.2)
+    - PayUIndia-CheckoutProBase (= 2.1.0)
+    - PayUIndia-Custom-Browser (= 6.0)
+    - PayUIndia-PG-SDK (= 5.2.0)
+    - PayUIndia-UPICore (= 3.0.1)
+  - PayUIndia-CheckoutProBase (2.1.0):
+    - PayUIndia-PayUParams (= 1.0.0)
+  - PayUIndia-Custom-Browser (6.0)
+  - PayUIndia-Logger (2.0.1)
+  - PayUIndia-Networking (2.0.1):
+    - PayUIndia-Logger (= 2.0.1)
+  - PayUIndia-PayUParams (1.0.0)
+  - PayUIndia-PG-SDK (5.2.0):
+    - PayUIndia-PayUParams (= 1.0.0)
+  - PayUIndia-UPICore (3.0.1):
+    - PayUIndia-Networking (= 2.0.1)
+    - Socket.IO-Client-Swift (= 15.1.0)
+  - Socket.IO-Client-Swift (15.1.0):
+    - Starscream (~> 3.1)
+  - Starscream (3.1.1)
 
 DEPENDENCIES:
   - eko_payu (from `.symlinks/plugins/eko_payu/ios`)
   - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  trunk:
+    - PayUIndia-AssetLibrary
+    - PayUIndia-CheckoutPro
+    - PayUIndia-CheckoutProBase
+    - PayUIndia-Custom-Browser
+    - PayUIndia-Logger
+    - PayUIndia-Networking
+    - PayUIndia-PayUParams
+    - PayUIndia-PG-SDK
+    - PayUIndia-UPICore
+    - Socket.IO-Client-Swift
+    - Starscream
 
 EXTERNAL SOURCES:
   eko_payu:
@@ -14,9 +51,20 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  eko_payu: aa878b49296c571635830341b0d35c5890fbf429
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  eko_payu: 32622e62853fcee5e84b07c6d9f6042a96c65ef4
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  PayUIndia-AssetLibrary: cc109939f8edb8fb0da15a545b883cbbf1ed82f4
+  PayUIndia-CheckoutPro: 5318bd93ab9239ac7c8e595755ceab33ccccca73
+  PayUIndia-CheckoutProBase: 2da2f385eb62aaaacef32643cbfdec1c45d03b06
+  PayUIndia-Custom-Browser: 61097aa039fdf579193cf8cf8ecfe6d81574966d
+  PayUIndia-Logger: 818c08ae963753d86ff89682daf3ced672896b1c
+  PayUIndia-Networking: 355cde94811c667e1da83aa7ebe0b38e0c918b9f
+  PayUIndia-PayUParams: 6a8ce1984f53179e6f5fa8b06c9aa3e9007bfff2
+  PayUIndia-PG-SDK: edd22a687e7a47c03e539bfa51d9ff7eaed89bf3
+  PayUIndia-UPICore: 31f6fa77eaa59b39107a49d949082635b37236ee
+  Socket.IO-Client-Swift: 7cb44c0ffb86e158cee32d0642d30ec5fdcf8f61
+  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: 7adbc9d59f05e1b01f554ea99b6c79e97f2214a2
 
 COCOAPODS: 1.10.1

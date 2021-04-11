@@ -108,6 +108,6 @@ class EkoPayu {
       "paymentSdkHash": paymentSdkHash,
       "vasSdkHash": vasSdkHash
     });
-    log("Start Payment Done");
+    print("Start Payment Done");
   }
 }
