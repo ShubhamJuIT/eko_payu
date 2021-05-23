@@ -12,7 +12,7 @@ public class SwiftEkoPayuPlugin: NSObject, FlutterPlugin {
     var primaryColor: String = "#053ac1"
     var secondaryColor: String = "#ffffff"
     var l1Option: String = "[{\"NetBanking\":\"\"},{\"emi\":\"\"},{\"UPI\":\"TEZ\"},{\"Wallet\":\"PHONEPE\"}]"
-    var orderDetail: String = "[{\"GST\":\"5%\"},{\"Delivery Date\":\"25 Dec\"},{\"Status\":\"In Progress\"}]"
+    var orderDetail: String = "[{\"GST\":\"18%\"},{\"Delivery Date\":\"25 Dec\"},{\"Status\":\"In Progress\"}]"
     var salt: String = "99FzqrK2";
 
     init(pluginRegistrar: FlutterPluginRegistrar, uiViewController: UIViewController, channel: FlutterMethodChannel){
@@ -76,6 +76,52 @@ public class SwiftEkoPayuPlugin: NSObject, FlutterPlugin {
             config: payUConfig,
             delegate: self)
     }
+    
+    public func getCheckoutProConfig(payuConfig: PayUCheckoutProConfig) -> PayUCheckoutProConfig{
+        var checkoutProConfig = PayUCheckoutProConfig();
+        checkoutProConfig.paymentModesOrder = getCheckoutOrderList();
+        checkoutProConfig.autoSelectOtp = payuConfig.autoSelectOtp;
+        checkoutProConfig.surePayCount = payuConfig.surePayCount;
+        checkoutProConfig.showExitConfirmationOnPaymentScreen=payuConfig.showExitConfirmationOnPaymentScreen;
+        checkoutProConfig.showExitConfirmationOnCheckoutScreen=payuConfig.showExitConfirmationOnCheckoutScreen;
+        checkoutProConfig.merchantName=payuConfig.merchantName;
+        checkoutProConfig.merchantLogo=payuConfig.merchantLogo;
+        return checkoutProConfig;
+    }
+    
+    private func getCheckoutOrderList() -> [PaymentMode] {
+        var checkoutOrderList: [PaymentMode] = []
+        if (true) {
+            checkoutOrderList.append(PaymentMode(paymentType: PaymentType.upi))
+        }
+        if(true){
+            checkoutOrderList.append(PaymentMode(paymentType: PaymentType.wallet))
+        }
+        if(true){
+            checkoutOrderList.append(PaymentMode(paymentType: PaymentType.other))
+        }
+        
+//        checkoutOrderList.add(
+//                PaymentMode(
+//                    PaymentType.UPI,
+//                    PayUCheckoutProConstants.CP_GOOGLE_PAY
+//                )
+//            )
+//            if (true) checkoutOrderList.add(
+//                PaymentMode(
+//                    PaymentType.WALLET,
+//                    PayUCheckoutProConstants.CP_PHONEPE
+//                )
+//            )
+//            if (true) checkoutOrderList.add(
+//                PaymentMode(
+//                    PaymentType.WALLET,
+//                    PayUCheckoutProConstants.CP_PAYTM
+//                )
+//            )
+            Log.i(TAG, "checkoutOrdeList " + checkoutOrderList);
+            return checkoutOrderList
+        }
     
     public func getEnvironment() -> Environment {
         if (self.paymentData.isProduction!) {

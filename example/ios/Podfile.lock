@@ -1,26 +1,26 @@
 PODS:
   - eko_payu (0.0.1):
     - Flutter
-    - PayUIndia-CheckoutPro (= 2.1.0)
+    - PayUIndia-CheckoutPro (= 2.2.1)
   - Flutter (1.0.0)
-  - PayUIndia-AssetLibrary (2.0.2)
-  - PayUIndia-CheckoutPro (2.1.0):
-    - PayUIndia-AssetLibrary (= 2.0.2)
-    - PayUIndia-CheckoutProBase (= 2.1.0)
-    - PayUIndia-Custom-Browser (= 6.0)
-    - PayUIndia-PG-SDK (= 5.2.0)
-    - PayUIndia-UPICore (= 3.0.1)
-  - PayUIndia-CheckoutProBase (2.1.0):
+  - PayUIndia-AssetLibrary (2.1.0)
+  - PayUIndia-CheckoutPro (2.2.1):
+    - PayUIndia-AssetLibrary (~> 2.1)
+    - PayUIndia-CheckoutProBase (~> 2.2.1)
+    - PayUIndia-Custom-Browser (~> 6.0)
+    - PayUIndia-PG-SDK (~> 6.0)
+    - PayUIndia-UPICore (~> 4.0)
+  - PayUIndia-CheckoutProBase (2.2.1):
     - PayUIndia-PayUParams (= 1.0.0)
-  - PayUIndia-Custom-Browser (6.0)
+  - PayUIndia-Custom-Browser (6.1.1)
   - PayUIndia-Logger (2.0.1)
   - PayUIndia-Networking (2.0.1):
     - PayUIndia-Logger (= 2.0.1)
   - PayUIndia-PayUParams (1.0.0)
-  - PayUIndia-PG-SDK (5.2.0):
+  - PayUIndia-PG-SDK (6.0.0):
     - PayUIndia-PayUParams (= 1.0.0)
-  - PayUIndia-UPICore (3.0.1):
-    - PayUIndia-Networking (= 2.0.1)
+  - PayUIndia-UPICore (4.0.0):
+    - PayUIndia-Networking (~> 2.0)
     - Socket.IO-Client-Swift (= 15.1.0)
   - Socket.IO-Client-Swift (15.1.0):
     - Starscream (~> 3.1)
@@ -51,17 +51,17 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  eko_payu: 32622e62853fcee5e84b07c6d9f6042a96c65ef4
+  eko_payu: 297bb8d258c257d2c533fbd865647421907cb2bc
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  PayUIndia-AssetLibrary: cc109939f8edb8fb0da15a545b883cbbf1ed82f4
-  PayUIndia-CheckoutPro: 5318bd93ab9239ac7c8e595755ceab33ccccca73
-  PayUIndia-CheckoutProBase: 2da2f385eb62aaaacef32643cbfdec1c45d03b06
-  PayUIndia-Custom-Browser: 61097aa039fdf579193cf8cf8ecfe6d81574966d
+  PayUIndia-AssetLibrary: 187c688225686a1cb329d3f239339b9e96c9017e
+  PayUIndia-CheckoutPro: e92aa37f5b43a2719d0aacead1c49a29146af7c0
+  PayUIndia-CheckoutProBase: 276d836728900ded45ce286dace5c40473013339
+  PayUIndia-Custom-Browser: e251cb87d41a343f5810faebe23f8edccf91a580
   PayUIndia-Logger: 818c08ae963753d86ff89682daf3ced672896b1c
   PayUIndia-Networking: 355cde94811c667e1da83aa7ebe0b38e0c918b9f
   PayUIndia-PayUParams: 6a8ce1984f53179e6f5fa8b06c9aa3e9007bfff2
-  PayUIndia-PG-SDK: edd22a687e7a47c03e539bfa51d9ff7eaed89bf3
-  PayUIndia-UPICore: 31f6fa77eaa59b39107a49d949082635b37236ee
+  PayUIndia-PG-SDK: d36fd0c9631d345b651b0c0f1578845a237f9073
+  PayUIndia-UPICore: 3c9281c94b00f7c896b40a2cd180466bf1dd8015
   Socket.IO-Client-Swift: 7cb44c0ffb86e158cee32d0642d30ec5fdcf8f61
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
 

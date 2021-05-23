@@ -15,7 +15,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'PayUIndia-CheckoutPro', '2.1.0'
+  s.dependency 'PayUIndia-CheckoutPro', '2.2.1'
   s.platform = :ios, '9.0'
   # s.ios.deployment_target = "12.0"
 
