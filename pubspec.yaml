@@ -1,6 +1,6 @@
 name: eko_payu
 description: Flutter project to payu money
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/ShubhamJuIT/eko_payu
 
 environment:
