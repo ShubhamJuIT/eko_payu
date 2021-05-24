@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7fc978e2-0aa3-4c97-8282-58a6fc918c19" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/ekodemy/eko_payu/HashGenerationUtils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/ekodemy/eko_payu/PaymentData.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/ekodemy/eko_payu/ReviewOrderRecyclerViewAdapter.kt" afterDir="false" />
-    </list>
+    <list default="true" id="7fc978e2-0aa3-4c97-8282-58a6fc918c19" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@910KPQJ2083588]" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -41,22 +38,22 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1613749827955">
+    <state width="1440" height="244" key="GridCell.Tab.0.bottom" timestamp="1621764095444">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1613749827955" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1613749827954">
+    <state width="1440" height="244" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1621764095444" />
+    <state width="1440" height="244" key="GridCell.Tab.0.center" timestamp="1621764095386">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1613749827954" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1613749827953">
+    <state width="1440" height="244" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1621764095386" />
+    <state width="1440" height="244" key="GridCell.Tab.0.left" timestamp="1621764095359">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1613749827953" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1613749827954">
+    <state width="1440" height="244" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1621764095359" />
+    <state width="1440" height="244" key="GridCell.Tab.0.right" timestamp="1621764095408">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1613749827954" />
+    <state width="1440" height="244" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1621764095408" />
     <state width="1398" height="245" key="GridCell.Tab.1.bottom" timestamp="1613749827956">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
