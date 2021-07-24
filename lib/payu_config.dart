@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 class PayuConfig {
-  bool showCbToolbar = true;
-  bool merchantSmsPermission = true;
-  bool autoSelectOtp = false;
-  bool autoApprove = false;
-  int surePayCount = 0;
-  bool showExitConfirmationOnPaymentScreen = true;
-  int merchantResponseTimeout = 10000;
-  bool showExitConfirmationOnCheckoutScreen = true;
-  String merchantName = "Eko";
+  bool? showCbToolbar = true;
+  bool? merchantSmsPermission = true;
+  bool? autoSelectOtp = false;
+  bool? autoApprove = false;
+  int? surePayCount = 0;
+  bool? showExitConfirmationOnPaymentScreen = true;
+  int? merchantResponseTimeout = 10000;
+  bool? showExitConfirmationOnCheckoutScreen = true;
+  String? merchantName = "Eko";
   PayuConfig({
     this.showCbToolbar,
     this.merchantSmsPermission,
@@ -39,8 +39,6 @@ class PayuConfig {
   }
 
   factory PayuConfig.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return PayuConfig(
       showCbToolbar: map['showCbToolbar'],
       merchantSmsPermission: map['merchantSmsPermission'],
