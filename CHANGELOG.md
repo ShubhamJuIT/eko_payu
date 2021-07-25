@@ -1,5 +1,9 @@
 ## 1.0.0
 
+* Checkout Pro Updated
+
+## 1.0.0
+
 * Null Safety
 
 ## 0.0.3
