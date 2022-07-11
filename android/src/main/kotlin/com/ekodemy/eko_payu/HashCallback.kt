@@ -34,7 +34,7 @@ class HashCallback(
 
     }
 
-    override fun error(errorCode: String?, errorMessage: String?, errorDetails: Any?) {
+    override fun error(errorCode: String, errorMessage: String?, errorDetails: Any?) {
         Log.e(TAG,"Hash Calculation Error.. errorCode [$errorCode] [$errorMessage]")
     }
 

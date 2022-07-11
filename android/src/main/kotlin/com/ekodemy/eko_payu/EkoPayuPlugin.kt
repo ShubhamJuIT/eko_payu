@@ -28,8 +28,7 @@ import io.flutter.plugin.common.PluginRegistry
 //import kotlinx.android.synthetic.main.activity_main.*
 //import kotlinx.android.synthetic.main.layout_si_details.*
 
-class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry,
-    PluginRegistry.ActivityResultListener {
+class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -86,7 +85,7 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         this.activity = binding.getActivity();
         context = binding.activity.applicationContext;
-        binding.addActivityResultListener(this);
+        // binding.addActivityResultListener(this);
     }
 
     override fun onDetachedFromActivityForConfigChanges() {}
@@ -95,8 +94,8 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
 
     override fun onDetachedFromActivity() {}
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        Log.e(TAG, "request code $requestCode resultcode $resultCode")
+    // override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        // Log.e(TAG, "request code $requestCode resultcode $resultCode")
 //        if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
 //            val transactionResponse: TransactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE)
 //            if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
@@ -113,8 +112,8 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
 //                }
 //            }
 //        }
-        return false;
-    }
+        // return false;
+    // }
 
     fun setupDetails(@NonNull call: MethodCall, @NonNull result: Result) {
 
@@ -367,15 +366,18 @@ class EkoPayuPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginReg
     }
 
 
-    override fun registrarFor(pluginKey: String?): PluginRegistry.Registrar {
-        TODO("Not yet implemented")
-    }
+    // override fun registrarFor(pluginKey: String?): PluginRegistry.Registrar {
+        
+    //     return PluginRegistry.register;
+    // }
 
-    override fun hasPlugin(pluginKey: String?): Boolean {
-        TODO("Not yet implemented")
-    }
+    // override fun hasPlugin(pluginKey: String?): Boolean {
+    //     // TODO("Not yet implemented")
+    //     return false;
+    // }
 
-    override fun <T : Any?> valuePublishedByPlugin(pluginKey: String?): T {
-        TODO("Not yet implemented")
-    }
+    // override fun <T : Any> valuePublishedByPlugin(pluginKey: String): T? {
+    //     // TODO("Not yet implemented")
+    //     return null;
+    // }
 }
