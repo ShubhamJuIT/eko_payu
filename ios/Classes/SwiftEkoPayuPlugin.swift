@@ -119,7 +119,7 @@ public class SwiftEkoPayuPlugin: NSObject, FlutterPlugin {
 //                    PayUCheckoutProConstants.CP_PAYTM
 //                )
 //            )
-            Log.i(TAG, "checkoutOrdeList " + checkoutOrderList);
+            // Log.i(TAG, "checkoutOrdeList " + checkoutOrderList);
             return checkoutOrderList
         }
     
